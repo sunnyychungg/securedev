@@ -1,5 +1,10 @@
 <?php
-session_start();
+
+if(!isset($_SESSION)) 
+{ 
+	session_start(); 
+} 
+
 ob_start();
 
 include "db_connect.php";
@@ -61,13 +66,15 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['login'])) && ($_POS
 							<?php
 						if (isset($_SESSION['username'])) :
 								?>
-										<li class="nav-item dropdown px-2" >
+										<li class="nav-item dropdown px-3" >
 												<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 														<img width="30px" height="30px" src="./logos/userlogo.png" />
-														<span class="px-2 username-text"><?=$_SESSION['username'];?> </span>
+														<span class="px-3 username-text"><?=$_SESSION['username'];?> </span>
 												</a>
 												<div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="navbarDropdownMenuLink">
 														<a class="dropdown-item text-light" href="profile.php">Profile</a>
+														<hr>
+														<a class="dropdown-item text-light" href="post.php">Profile</a>
 														<hr>
 														<a class="dropdown-item text-light" href="./logout.php">Logout</a>
 												</div>
@@ -75,7 +82,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['login'])) && ($_POS
 										<?php
 						else :
 								?>
-										<li class="nav-item px-2">
+										<li class="nav-item px-3">
 												<a class="nav-link text-light" data-toggle="modal" data-target="#signinPage" href="">
 														<img width="30px" height="30px" src="./logos/userlogo.png" />
 												</a>
