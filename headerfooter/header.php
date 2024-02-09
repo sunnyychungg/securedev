@@ -7,35 +7,28 @@ include "db_connect.php";
 $login = 0;
 $invalid = 0;
 
-if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['login'] == "go")) {
-
-	// Validates text, trims, etc.
-	function validate($data) {
-		$data = trim($data);
-		$data = stripslashes($data);
-		$data = htmlspecialchars($data);
-		return $data;
-	}
-
-	$username = validate($_POST['username']);
-	$password = validate($_POST['password']);
-
+if (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['login'])) && ($_POST['login'] == "go")) {
 	// Deals with empty boxes and correct info.
-	if (empty($username) || (empty($password)))  {
+	if (empty($_POST['username']) || (empty($_POST['password'])))  {
 		$invalid = 1;
-		exit();
 	}
 	else {
-		$sql = " SELECT * FROM users WHERE username='$username' AND password='$password' ";
+		$sql = sprintf("SELECT * FROM users WHERE username='%s'", $conn->real_escape_string($_POST['username']));
 
-		$result = mysqli_query($conn, $sql);
+		$result = $conn->query($sql);
+		$user = $result->fetch_assoc();
 
-		if (mysqli_num_rows($result) === 1) {
-			session_start();
-			$_SESSION['username'] = $username;
-			$login = 1;
-			header('Location: profile.php');
-			exit();
+		if ($user) {
+			if (password_verify($_POST['password'], $user['password'])) {
+				session_start();
+				$_SESSION['username'] = $_POST['username'];
+				$login = 1;
+				header('Location: profile.php');
+				exit();
+			}
+			else {
+				$invalid = 1;
+			}
 		}
 		else {
 			$invalid = 1;
@@ -54,7 +47,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['login'] == "go")) {
 				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 				<link rel="stylesheet" href="./stylesheets/styles.css">
 
-				<title>ChatEZSE</title>
+				<title>ChatEZWS</title>
 				 </head>
 
 			 <body>
