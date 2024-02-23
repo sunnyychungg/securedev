@@ -74,7 +74,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['login'])) && ($_POS
 												<div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="navbarDropdownMenuLink">
 														<a class="dropdown-item text-light" href="profile.php">Profile</a>
 														<hr>
-														<a class="dropdown-item text-light" href="post.php">Profile</a>
+														<a class="dropdown-item text-light" href="post.php">Forum</a>
 														<hr>
 														<a class="dropdown-item text-light" href="./logout.php">Logout</a>
 												</div>
