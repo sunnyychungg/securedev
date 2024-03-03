@@ -18,12 +18,14 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['login'])) && ($_POS
 		$invalid = 1;
 	}
 	else {
+		// Prepared statement similar to printf, uses real_escape_string() to get rid of special characters
 		$sql = sprintf("SELECT * FROM users WHERE username='%s'", $conn->real_escape_string($_POST['username']));
 
 		$result = $conn->query($sql);
 		$user = $result->fetch_assoc();
 
 		if ($user) {
+			// Uses password_verify(), means we don't have to decrypt password to compare on server
 			if (password_verify($_POST['password'], $user['password'])) {
 				session_start();
 				$_SESSION['username'] = $_POST['username'];

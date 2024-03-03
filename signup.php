@@ -38,8 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 
 	else {
+		// Hashes Password
 		$password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
+		// Prepared Statement involving user, password & email inputs
 		$sql = "INSERT INTO users(username, password, email) VALUES (?, ?, ?)";
 
 		$stmt = $conn->stmt_init();
