@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['message'])) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $message = $conn->real_escape_string($_POST['message']);
+    $message = $conn->$_POST['message'];
     $username = $_SESSION['username'];
 
     $insertQuery = "INSERT INTO messages (username, message) VALUES ('$username', '$message')";
