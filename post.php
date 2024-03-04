@@ -2,7 +2,7 @@
 include 'headerfooter/header.php';
 
 // Check if the form is submitted for posting a message
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['message'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['message'])) {
     // Insert message into the database
     $$sname = "localhost";
     $uname = "root";
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['message'])) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $message = $conn->$_POST['message'];
+    $message = $_GET['message'];
     $username = $_SESSION['username'];
 
     $insertQuery = "INSERT INTO messages (username, message) VALUES ('$username', '$message')";
@@ -79,7 +79,7 @@ $conn->close();
     <div class="container-fluid custom4-padding text-white">
         <div class="row">
             <div class="col">
-                <form action='./post.php' method='POST'>
+                <form action='./post.php' method='GET'>
                     <div class="form-group">
                     <label style="font-size: 24px; font-weight: bold;">ChatEZWS Forum</label>
                         <input type="message" class="form-control" name="message" placeholder="Enter a Message!" required>
