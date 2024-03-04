@@ -4,7 +4,7 @@ if(isset($_POST["reset-request-submit"])){
     #two token used to aviod timing attacks making the software secure 
     $selector = bin2hex(random_bytes(8));# used to pinpoint the user to check the actual data "SSD"
     $token = random_bytes(32);# used to authenticate the user 
-    $url= "localhost/SSD/securedev/forgotpassword/create-new-password.php?selector=" . $selector . "&Validator=". bin2hex($token);
+    $url= "http://localhost/SSD/securedev/forgotpassword/create-new-password.php?selector=" . $selector . "&Validator=". bin2hex($token);
     $expiries= date("U") + 1800;
 
     require 'dbh.inc.php';
