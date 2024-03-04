@@ -124,6 +124,9 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && (isset($_POST['login'])) && ($_POS
 
 													<!-- Sign Up Redirect -->
 													<h6 class="text-center font-weight-light">Need an account? <a href='signup.php'>SIGN UP</a></h6>
+
+													<!-- forgot password Redirect -->
+													<h7 class="text-center font-weight-light">Forgot password? <a href='ForgotPassword.php'>ForgotPassword</a></h6>
 											</form>
 							 		</div>
 				</div>
