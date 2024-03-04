@@ -1,4 +1,16 @@
 <?php
+
+$uploadsDirectory = __DIR__ . '/uploads';
+
+// Check if the directory doesn't already exist
+if (!file_exists($uploadsDirectory) && !is_dir($uploadsDirectory)) {
+    // Create the "uploads" directory
+    mkdir($uploadsDirectory);
+
+    echo 'The "uploads" directory has been created successfully.';
+} else {
+    echo 'The "uploads" directory already exists.';
+}
 $target_dir = "uploads/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
