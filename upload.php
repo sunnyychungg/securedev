@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Image Upload Using PHP </title>
+    <title>Image Upload</title>
     <style>
         body {
             display: flex;
