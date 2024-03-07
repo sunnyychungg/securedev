@@ -1,45 +1,83 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Image Upload Using PHP </title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;           
+        }
+    </style>
+</head>
 <body>
-
-<form action="upload.php" method="post" enctype="multipart/form-data">
-  Select image to upload:
-  <input type="file" name="fileToUpload" id="fileToUpload">
-  <input type="submit" value="Upload Image" name="submit">
-</form>
-
+     <form action="upload.php"
+           method="post"
+           enctype="multipart/form-data">
+           
+           <input type="file"
+                  name="my_image">
+              
+           <input type="submit"
+                  name="submit"
+                  value="Upload">
+          
+      </form>
 </body>
 </html>
 
 <?php
+include "headerfooter/header.php";
 
-$uploadsDirectory = __DIR__ . '/uploads';
+if (isset($_POST['submit']) && isset ($_FILES['my_image'])) {
 
-// Check if the directory doesn't already exist
-if (!file_exists($uploadsDirectory) && !is_dir($uploadsDirectory)) {
-    // Create the "uploads" directory
-    mkdir($uploadsDirectory);
+    echo "<pre>";
+    print_r($_FILES['my_image']);
+    echo "</pre>";
 
-    echo 'The "uploads" directory has been created successfully.';
-} else {
-    echo 'The "uploads" directory already exists.';
+    $img_name = $_FILES['my_image']['name'];
+    $img_size = $_FILES['my_image']['size'];
+    $tmp_name = $_FILES['my_image']['tmo_name'];
+    $error = $_FILES['my_image']['error'];
+
+    if ($error === 0) {
+        if ($img_size > 125000) {
+            $em = "Sorry, your file is too large.";
+            header("Location: index.php?error=$em");            
+        }else {
+            $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
+            $img_ex_lc = strtolower($img_ex);
+
+            $allowed_exs = array("jpg", "jpeg", "png");
+
+            if (in_array($img_ex_lc, $allowed_exs)) {
+                $new_image_name = uniqid("IMG-", true).'.'.$img_ex_lc;
+                $img_upload_path = 'uploads/'.$new_img_name;
+                move_uploaded_file($tmp_name, $img_upload_path);
+
+                // Insert into Database
+                $sql = "INSERT INTO images(image_url)
+                        VALUES('$new_image_name')";
+                        mysqli_query($conn, $sql);
+                        header("Location: view.php");
+            }else {
+                $em = "You can't upload files of this type";
+                header ("Location: index.php?error=$em");
+            }
+
+        }
+    }else { 
+        $em = "uknown error occurred!";
+        header("Location: index.php?error=$em");
+    }
+
+}else {
+    header("Location: index.php");
 }
-$target_dir = "uploads/";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-$uploadOk = 1;
-$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-// Check if image file is a actual image or fake image
-if(isset($_POST["submit"])) {
-  $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-  if($check !== false) {
-    echo "File is an image - " . $check["mime"] . ".";
-    $uploadOk = 1;
-  } else {
-    echo "File is not an image.";
-    $uploadOk = 0;
-  }
-}
-
-}
+?>
+<?php
+include "headerfooter/footer.php";
 ?>
