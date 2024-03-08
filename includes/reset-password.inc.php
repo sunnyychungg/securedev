@@ -42,7 +42,7 @@ if (isset($_POST["reset-password-submit"])) {
                 exit();
             } elseif ($tokenCheck === true) {
                 $tokenEmail = $row['pwdRestEmail'];
-                $sql = "SELECT * FROM users WHERE emailUsers=?;";
+                $sql = "SELECT * FROM users WHERE email=?;";
                 $stmt = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
                     echo "error occurred";
@@ -55,7 +55,7 @@ if (isset($_POST["reset-password-submit"])) {
                         echo "error occurred";
                         exit();
                     } else {
-                        $sql = "UPDATE users SET pwdUsers=? WHERE emailUsers=?";
+                        $sql = "UPDATE users SET pwdUsers=? WHERE email=?";
                         $stmt = mysqli_stmt_init($conn);
                         if (!mysqli_stmt_prepare($stmt, $sql)) {
                             echo "There was an error!";
@@ -73,7 +73,7 @@ if (isset($_POST["reset-password-submit"])) {
                             } else {
                                 mysqli_stmt_bind_param($stmt, "s", $tokenEmail);
                                 mysqli_stmt_execute($stmt);
-                                header("Location: ../signup.php?newpwd=passwordupdated");
+                                header("Location: ../homepage.php?newpwd=passwordupdated");
                             }
                         }
                     }

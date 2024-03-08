@@ -1,6 +1,5 @@
 <?php 
-#include "C:/xampp/htdocs/forgotPassword/includes/reset-request.inc.php";
-#require 'dbh.inc.php';
+require "headerfooter/header.php";
 ?>
 
     <main>
@@ -42,5 +41,5 @@
     </main>
 
 <?php
-#require "footer.php" 
+require "headerfooter/footer.php" ;
 ?>
