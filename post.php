@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['message'])) {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-
+// Get message from input, and username from current session
     $message = $_GET['message'];
     $username = $_SESSION['username'];
 
@@ -42,6 +42,7 @@ while ($row = $result->fetch_assoc()) {
 $conn->close();
 ?>
 
+<!-- CSS for background and submit button -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
